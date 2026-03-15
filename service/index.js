@@ -44,7 +44,7 @@ app.put('/posts/like/:id', async(req,res) => {
     try {
         const { id } = req.params
         const values = [id]
-        const resul = await pool.query("update posts set likes = 1 where id = $1", values)
+        const resul = await pool.query("update posts set likes = likes + 1 where id = $1", values)
         res.send ("Posts Actualizado correctamente " + id)
     } catch (error) {
         console.error("error al Actualizar like posts")
