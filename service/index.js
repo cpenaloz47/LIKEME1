@@ -36,9 +36,41 @@ app.post('/posts', async(req,res) => {
                 message: error.message
             }
         )
-
-
-
     }
+})
 
+app.put('/posts/like/:id', async(req,res) => {
+
+    try {
+        const { id } = req.params
+        const values = [id]
+        const resul = await pool.query("update posts set likes = 1 where id = $1", values)
+        res.send ("Posts Actualizado correctamente " + id)
+    } catch (error) {
+        console.error("error al Actualizar like posts")
+        res.status(500).json(
+            {
+                error: error.code,
+                message: error.message
+            }
+        )
+    }
+})
+
+app.delete('/posts/:id', async(req,res) => {
+
+    try {
+        const { id } = req.params
+        const values = [id]
+        const resul = await pool.query("delete from posts where id = $1", values)
+        res.send ("Posts Eliminado correctamente " + id)
+    } catch (error) {
+        console.error("error al Eliminar posts")
+        res.status(500).json(
+            {
+                error: error.code,
+                message: error.message
+            }
+        )
+    }
 })
